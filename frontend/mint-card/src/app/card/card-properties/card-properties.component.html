@@ -1,0 +1,12 @@
+<div fxLayout="row" fxLayoutAlign="space-between">
+    <h1>{{data.card.data.name}}</h1>
+    <h1>{{data.card.data.manaCost}}</h1>
+</div>
+<img *ngIf="data.image" [src]="data.image"/>
+
+
+<h3>{{data.card.data.types}}</h3>
+
+<p>{{data.card.data.text}}</p>
+
+<p *ngIf="data.card.data.power && data.card.data.toughness">{{data.card.data.power}}/{{data.card.data.toughness}}</p>

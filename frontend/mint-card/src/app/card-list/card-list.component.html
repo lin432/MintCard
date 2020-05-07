@@ -1,0 +1,16 @@
+<div fxLayout="row" #cardzone class="workspace">
+    <ng-container *ngFor="let cardId of getKeys()" class="cardBounds">
+        <app-card [simple]="simple" *ngIf="cards[cardId].card" cdkDrag 
+            [cdkDragFreeDragPosition]="positions[cardId]"
+            [cdkDragDisabled]="disabled"
+            [card]="cards[cardId].card" [amount]="cards[cardId].amount"
+            [image]="cards[cardId].imageUrl"
+            (amountChange)="update($event, cardId)">
+        </app-card>
+    </ng-container>
+</div>
+
+<!-- Get a List of cards -->
+<!-- Make them draggable -->
+<!-- Set boundary for drag -->
+<!-- try to fix styling issues-->

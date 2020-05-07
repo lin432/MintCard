@@ -1,0 +1,91 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    # nginx.ingress.kubernetes.io/use-regex: "true"
+    # nginx.ingress.kubernetes.io/proxy-body-size: 10m (Change this as you need)
+    # nginx.ingress.kubernetes.io/proxy-connect-timeout: "100"
+    # nginx.ingress.kubernetes.io/proxy-send-timeout: "100"
+    # nginx.ingress.kubernetes.io/proxy-read-timeout: "100"
+    # nginx.ingress.kubernetes.io/proxy-buffering: "on"
+spec:
+  tls:
+    - hosts:
+      - mintcard.me
+      secretName: mintcard-tls
+  rules:
+  - host: mintcard.me 
+    http:
+      paths:
+      - path: / #?(.*)
+        backend:
+          serviceName: angular-nginx-service
+          servicePort: 80
+      - path: /api/ #?(.*) #(/|$)(.*)
+        backend:
+          serviceName: node-service
+          servicePort: 80
+      - path: /app/
+        backend:
+          serviceName: kibana-node-svc
+          servicePort: 5601
+      - path: /bundles/
+        backend:
+          serviceName: kibana-node-svc
+          servicePort: 5601
+      - path: /built_assets/
+        backend:
+          serviceName: kibana-node-svc
+          servicePort: 5601
+      - path: /node_modules/
+        backend:
+          serviceName: kibana-node-svc
+          servicePort: 5601
+      - path: /ui/
+        backend:
+          serviceName: kibana-node-svc
+          servicePort: 5601
+      - path: /translations/
+        backend:
+          serviceName: kibana-node-svc
+          servicePort: 5601
+      - path: /api/core/capabilities
+        backend:
+          serviceName: kibana-node-svc
+          servicePort: 5601
+      - path: /internal/
+        backend:
+          serviceName: kibana-node-svc
+          servicePort: 5601
+      - path: /api/rollup/indices
+        backend:
+          serviceName: kibana-node-svc
+          servicePort: 5601
+      - path: /api/licensing/info
+        backend:
+          serviceName: kibana-node-svc
+          servicePort: 5601
+      - path: /api/saved_objects/
+        backend:
+          serviceName: kibana-node-svc
+          servicePort: 5601
+      - path: /api/telemetry/v2/clusters/
+        backend:
+          serviceName: kibana-node-svc
+          servicePort: 5601
+      - path: /elasticsearch/
+        backend:
+          serviceName: kibana-node-svc
+          servicePort: 5601
+      - path: /api/xpack/
+        backend:
+          serviceName: kibana-node-svc
+          servicePort: 5601
+      - path: /api/index_patterns/
+        backend:
+          serviceName: kibana-node-svc
+          servicePort: 5601

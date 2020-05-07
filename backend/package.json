@@ -1,0 +1,29 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "- description: Create a new deck\r - request: `POST /api/deck/`\r     - content-type: `application/json`\r     - body: object\r       - name: (string) the username\r       - description: (string) the password\r       - cards: (integer[]) the cards in the deck by cardId\r - response: 200\r     - content-type: `application/json`\r     - body: object\r       - deckId: (string) the newly created deck's id\r       - name: (string) name of the deck\r       - description: (string) description of the deck\r       - cards: (integer[]) card id in deck\r       - owner: (string) id of the deck owner",
+  "main": "main.js",
+  "dependencies": {
+    "@elastic/elasticsearch": "^7.6.1",
+    "@google-cloud/language": "^3.8.0",
+    "body-parser": "^1.19.0",
+    "cookie": "^0.4.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "express-validator": "^6.4.0",
+    "fs": "^0.0.1-security",
+    "https": "^1.0.0",
+    "path": "^0.12.7",
+    "pg-promise": "^10.4.4",
+    "request": "^2.88.2",
+    "uuid": "latest"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "NODE_ENV=production node .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

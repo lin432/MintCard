@@ -1,0 +1,15 @@
+<div class="cardFooter" fxLayout="row" fxLayoutAlign="space-evenly">
+    <button mat-icon-button class="cardButton" matTooltip="Add" (click)="add()">
+        <mat-icon class="cardIcon">add</mat-icon>
+    </button>
+    <p *ngIf="!simple">{{amount}}</p>
+    <button *ngIf="!simple" mat-icon-button class="cardButton" matTooltip="Remove" (click)="remove()">
+        <mat-icon class="cardIcon">remove</mat-icon>
+    </button>
+    <button mat-icon-button class="cardButton" matTooltip="More Details" (click)="openCardProperties()">
+        <mat-icon class="cardIcon">launch</mat-icon>
+    </button>
+</div>
+<div class="card">
+    <img *ngIf="image" [src]="image"/>
+</div>

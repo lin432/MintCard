@@ -1,0 +1,30 @@
+<div class="view" fxLayoutAlign="center center" fxLayout="column">
+  <div>
+    <form id="login_form">
+      <mat-form-field>
+        <mat-label>USERNAME</mat-label>
+        <input matInput [formControl]="usernameFormControl" type="text" #username name="username" required/>
+        <mat-error *ngIf="usernameFormControl.hasError('required')">
+          Please enter a username
+      </mat-error>
+      </mat-form-field>
+      <br/>
+      <mat-form-field>
+        <mat-label>PASSWORD</mat-label>
+        <input matInput [formControl]="passwordFormControl" type="password" #password name="password" required/>
+        <mat-error *ngIf="passwordFormControl.hasError('required')">
+          Missing Password
+      </mat-error>
+      <mat-error *ngIf="passwordFormControl.hasError('minLength')">
+        Password must have a length of 8 characters
+    </mat-error>
+      </mat-form-field>
+    </form>
+  </div>
+  <div class="space"></div>
+  <div fxLayout="column">
+    <button mat-raised-button id="signin" (click)="dispatchLogin()">Sign in</button>
+    <button mat-button id="signup" (click)="dispatchRegister()">Sign up</button>
+  </div>
+  
+</div>

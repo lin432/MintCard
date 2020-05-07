@@ -1,0 +1,62 @@
+version: '3'
+services:
+    node:
+        container_name: node
+        restart: always
+        build: ./backend/
+        ports:
+            - '3000:3000'
+        depends_on:
+            - postgres
+            #- elasticsearch
+        networks:
+            - frontend
+            - backend
+    postgres:
+        container_name: postgres
+        image: postgres:latest
+        restart: always
+        ports:
+            - '5432:5432'
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: CSCC09
+        volumes:
+            - ./backend/SQL/docker_init.sql:/docker-entrypoint-initdb.d/docker_init.sql
+        networks:
+            - backend
+    angular-nginx:
+        container_name: angular-nginx
+        restart: always
+        build: frontend/mint-card/
+        ports:
+            - '4200:4200'
+        volumes:
+            - '/usr/src/app/node_modules'
+            - './frontend/mint-card/:/usr/src/app'
+        networks:
+            - frontend
+    # elasticsearch:
+    #     container_name: elasticsearch
+    #     restart: always
+    #     image: docker.elastic.co/elasticsearch/elasticsearch:7.6.1
+    #     environment:
+    #         - node.name=elasticsearch
+    #         # - cluster.initial_master_nodes=elasticsearch
+    #         - discovery.seed_hosts=elasticsearch
+    #         # - network.host=0.0.0.0
+    #         # - http.port=9200
+    #         - discovery.type=single-node
+    #     ulimits:
+    #         memlock:
+    #             soft: -1
+    #             hard: -1
+    #     ports:
+    #         - '9200:9200'
+    #         - '9300:9300'
+    #     networks:
+    #         - backend
+networks:
+    frontend:
+    backend:

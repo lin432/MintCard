@@ -1,0 +1,188 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: angular-nginx-deployment
+  labels:
+    app: angular-nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: angular-nginx
+  template:
+    metadata:
+      labels:
+        app: angular-nginx
+    spec:
+      containers:
+        - name: angular-nginx
+          image: gcr.io/local-snow-271101/angular-nginx
+          ports:
+            - containerPort: 4200
+              protocol: TCP
+
+---
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: node-deployment
+  namespace: default
+  labels:
+    app: node
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node
+  template:
+    metadata:
+      labels:
+        app: node
+    spec:
+      containers:
+        - name: node
+          image: gcr.io/local-snow-271101/node
+          ports:
+            - containerPort: 80
+              protocol: TCP
+
+---
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: postgres-deployment
+  namespace: default
+  labels:
+    app: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: gcr.io/local-snow-271101/postgres
+          env:
+          # change to secret
+          - name: POSTGRES_DB
+            value: CSCC09
+          - name: POSTGRES_USER
+            value: postgres
+          - name: POSTGRES_PASSWORD
+            value: postgres
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+          volumeMounts:
+          - name: postgres-pv-claim
+            mountPath: /var/lib/postgres/data
+      volumes:
+        - name: postgres-pv-claim
+          persistentVolumeClaim:
+            claimName: postgres-pv-claim
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres-pv-volume
+  labels:
+    type: local
+    app: postgres
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data"
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pv-claim
+  labels:
+    app: postgres
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+
+---
+
+# apiVersion: elasticsearch.k8s.elastic.co/v1
+# kind: Elasticsearch
+# metadata:
+#   name: elasticsearch-deployment
+#   labels:
+#     app: elasticsearch-deployment
+# spec:
+#   version: 7.6.2
+#   nodeSets:
+#   - name: default
+#     count: 1
+#     config:
+#       node.master: true
+#       node.data: true
+#       node.ingest: true
+#     podTemplate:
+#       spec:
+#         initContainers:
+#         - name: sysctl
+#           securityContext:
+#             privileged: true
+#           command: ['sh', '-c', 'sysctl -w vm.max_map_count=262144']
+
+---
+
+# apiVersion: kibana.k8s.elastic.co/v1
+# kind: Kibana
+# metadata:
+#   name: kibana-deployment
+#   labels:
+#     app: kibana-deployment
+# spec:
+#   version: 7.6.2
+#   count: 1
+#   elasticsearchRef:
+#     name: elasticsearch-deployment
+
+# kind: Deployment
+# apiVersion: apps/v1
+# metadata:
+#   name: elasticsearch-deployment
+#   namespace: default
+#   labels:
+#     app: elasticsearch
+# spec:
+#   securityContext:
+#     sysctls:
+#     - name: vm.max_map_count
+#       value: "262144"
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: elasticsearch
+#   template:
+#     metadata:
+#       labels:
+#         app: elasticsearch
+#     spec:
+#       containers:
+#       - name: elasticsearch
+#         image: gcr.io/local-snow-271101/elasticsearch
+#         ports:
+#           - containerPort: 9200
+#             protocol: TCP

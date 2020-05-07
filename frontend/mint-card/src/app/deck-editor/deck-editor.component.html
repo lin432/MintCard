@@ -1,0 +1,41 @@
+<div class="editor">
+    <div fxLayout="row">
+        <mat-toolbar color="secondary">
+            <form>
+                <mat-form-field [floatLabel]="'never'">
+                    <input matInput [formControl]="deckFormControl" #deckName placeholder="Deck Name" required>
+                    <mat-error *ngIf="deckFormControl.hasError('required')">
+                        Name of deck is required
+                    </mat-error>
+                </mat-form-field>
+            </form>
+
+            <button mat-icon-button matTooltip="Description of Deck" (click)="openDialog()">
+                <mat-icon>description</mat-icon>
+            </button>
+
+            <div class="fill"></div>
+            <button mat-icon-button matTooltip="Save Deck" (click)="saveDeck()">
+                <mat-icon>save</mat-icon>
+            </button>
+            <button mat-icon-button [matMenuTriggerFor]="deckOptions" matTooltip="Settings">
+                <mat-icon>settings</mat-icon>
+            </button>
+
+            <mat-menu #deckOptions="matMenu">
+                <button mat-menu-item *ngIf="currentDeck && currentDeck.id"(click)="newDeck()">New Deck</button>
+                <button mat-menu-item (click)="saveDeck()">Save Deck</button>
+                <button mat-menu-item [matMenuTriggerFor]="loadDecks" *ngIf="decks && decks.length > 0">Load Deck</button>
+                <button mat-menu-item *ngIf="currentDeck && currentDeck.id" (click)="deleteDeck()">Delete Deck</button>
+            </mat-menu>
+            <mat-menu #loadDecks="matMenu">
+                <div *ngFor="let deck of decks">
+                    <button mat-menu-item (click)="loadDeck(deck)">{{deck.name}}</button>
+                </div>
+
+            </mat-menu>
+
+        </mat-toolbar>
+    </div>
+    <app-card-list [cards]="cards" (cardChange)="update()"></app-card-list>
+</div>

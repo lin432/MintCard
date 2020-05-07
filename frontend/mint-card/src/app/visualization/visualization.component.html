@@ -1,0 +1,45 @@
+<div class="editor">
+  <div fxLayout="row">
+    <mat-toolbar color="secondary">
+      <div class="fill" fxLayoutAlign="space-evenly center">
+        <mat-slide-toggle (change)="toggleChange('CMC', $event)">CMC</mat-slide-toggle>
+        <mat-slide-toggle (change)="toggleChange('CMCHeatMap', $event)">CMCHeatMap</mat-slide-toggle>
+        <mat-slide-toggle (change)="toggleChange('CardTypeBar', $event)">CardTypeBar</mat-slide-toggle>
+      </div>
+
+      <button mat-icon-button (click)="dispatchKibanaVisualize()">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </mat-toolbar>
+  </div>
+  <mat-grid-list cols="1" rowHeight="50">
+    <div *ngIf="visualizationURLs.CMC !== null && visualizationURLs.CMC !== undefined && show">
+      <mat-grid-tile colspan="1" rowspan="1" fxLayoutAlign="center center">
+        <h1>CMC</h1>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="1" rowspan="12">
+        <!-- actual visualizations -->
+        <iframe [src]=visualizationURLs.CMC height="600" width="800"></iframe>
+      </mat-grid-tile>
+    </div>
+    <div *ngIf="visualizationURLs.CMCHeatMap !== null && visualizationURLs.CMCHeatMap !== undefined && show">
+      <mat-grid-tile colspan="1" rowspan="1" fxLayoutAlign="center center">
+        <h1>CMCHeatMap</h1>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="1" rowspan="12">
+        <!-- actual visualizations -->
+        <iframe [src]=visualizationURLs.CMCHeatMap height="600" width="800"></iframe>
+      </mat-grid-tile>
+    </div>
+    <div *ngIf="visualizationURLs.CardTypeBar !== null && visualizationURLs.CardTypeBar !== undefined && show">
+      <mat-grid-tile colspan="1" rowspan="1" fxLayoutAlign="center center">
+        <h1>CardTypeBar</h1>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="1" rowspan="12">
+        <!-- actual visualizations -->
+        <iframe [src]=visualizationURLs.CardTypeBar height="600" width="800"></iframe>
+      </mat-grid-tile>
+    </div>
+  </mat-grid-list>
+
+</div>

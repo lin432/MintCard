@@ -1,0 +1,12 @@
+<div fxLayout="column">
+    <h1 mat-dialog-title>Description</h1>
+    <mat-form-field [floatLabel]="'never'">
+        <textarea matInput [formControl]="descriptionControl" [value]="">
+        </textarea>
+    </mat-form-field>
+    <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">Close</button>
+        <button mat-button (click)="onOkClick()" cdkFocusInitial>Done</button>
+    </div>
+
+</div>

@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: mintcard-cert
+spec:
+  secretName: mintcard-tls
+  duration: 24h
+  renewBefore: 12h
+  commonName: mintcard
+  dnsNames:
+  - mitcard.me
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer

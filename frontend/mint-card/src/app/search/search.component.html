@@ -1,0 +1,18 @@
+<div class="editor">
+  <div fxLayout="row">
+      <mat-toolbar color="secondary">
+        <form>
+          <mat-form-field [floatLabel]="'never'">
+            <mat-label>Enter text to search</mat-label>
+            <input matInput type="text" #searchText required/>
+          </mat-form-field>
+        </form>
+        <button mat-raised-button class="marginButton" (click)="dispatchSearch()">Search</button>
+        <mat-slide-toggle (change)="toggleElastic($event)">{{searchElastic? "Elastic" : "Simple"}}</mat-slide-toggle>
+        <span></span>
+        <button mat-raised-button (click)="showAdvanced()">Advanced Search</button>
+      </mat-toolbar>
+  </div>
+  <app-card-list [simple]="true" [disabled]="true" 
+  [cards]="searchResults" (cardChange)="handleAdd($event)"></app-card-list>
+</div>

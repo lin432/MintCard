@@ -1,0 +1,10 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>Mint-Cards</span>
+    <div class="fill"></div>
+    <span *ngIf="username">Logged in as: {{username}}</span>
+    <div *ngIf="!username"> Not Logged in </div>
+    <button *ngIf="username" mat-button (click)="signout()">Sign Out</button>
+    
+  </mat-toolbar-row>
+</mat-toolbar>

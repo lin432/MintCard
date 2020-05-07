@@ -1,0 +1,56 @@
+<div>
+  <form fxLayout="column" >
+    <mat-form-field>
+      <mat-label>NAME</mat-label>
+      <input matInput type="text" #name />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>TYPE</mat-label>
+      <input matInput type="text" #type />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>TEXT</mat-label>
+      <input matInput type="text" #text />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>UUID</mat-label>
+      <input matInput type="text" #uuid />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>POWER</mat-label>
+      <input matInput type="text" #power />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>TOUGHNESS</mat-label>
+      <input matInput type="text" #toughness />
+    </mat-form-field>
+    <mat-label>Colors:</mat-label>
+    <div>
+      <mat-slide-toggle (change)="toggleColor('W', $event)">WHITE</mat-slide-toggle>
+      <mat-slide-toggle (change)="toggleColor('U', $event)">BLUE</mat-slide-toggle>
+      <mat-slide-toggle (change)="toggleColor('B', $event)">BLACK</mat-slide-toggle>
+      <mat-slide-toggle (change)="toggleColor('R', $event)">RED</mat-slide-toggle>
+      <mat-slide-toggle (change)="toggleColor('G', $event)">GREEN</mat-slide-toggle>      
+    </div>
+    <mat-form-field>
+      <mat-label>TYPES</mat-label>
+      <input matInput type="text" #types />
+      <mat-hint>comma separated list of types</mat-hint>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>SUPERTYPES</mat-label>
+      <input matInput type="text" #supertypes />
+      <mat-hint>comma separated list of types</mat-hint>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>SUBTYPES</mat-label>
+      <input matInput type="text" #subtypes />
+      <mat-hint>comma separated list of types</mat-hint>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-button (click)="dispatchSearchAdvanced()" cdkFocusInitial>Advanced Search</button>
+</div>
